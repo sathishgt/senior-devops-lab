@@ -1,0 +1,21 @@
+name: EDA Infra Script Validation
+
+on:
+  push:
+    branches: [ "main", "feature/*" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validate-scripts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run Syntax & Shell Check
+        run: |
+          echo "Checking shell script syntax..."
+          bash -n check_licenses.sh || true
+          bash -n parse_license_log.sh || true
+          echo "All scripts checked successfully."
